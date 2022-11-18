@@ -1,27 +1,57 @@
 package com.example.springtest.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.example.springtest.enums.Status;
+
+import javax.persistence.*;
 import java.util.Date;
 
 
 @Entity
-public class Sample {
+@Table(name = "tasks")
+public class Task {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
+
+    @Column(length = 50, nullable = false)
     private String taskName;
+
+    @Column(length = 80, nullable = false)
     private String taskDescription;
-    private Enum status;
+
+    @Column
+    private Status status;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date completedAt;
 
-    public Sample() {
+    @PrePersist
+    public  void setCreatedAt() {
+        createdAt = new Date();
+    }
+
+    @PostPersist
+    public  void setUpdatedAt() {
+        updatedAt = new Date();
+    }
+
+    @PreUpdate
+    public  void setCompletedAt() {
+        completedAt = new Date();
+    }
+
+    public Task() {
 
     }
 
-    public Sample(String id, String taskName, String taskDescription, Enum status, Date createdAt, Date updatedAt, Date completedAt) {
+    public Task(String id, String taskName, String taskDescription, Status status, Date createdAt, Date updatedAt, Date completedAt) {
         this.id = id;
         this.taskName = taskName;
         this.taskDescription = taskDescription;
@@ -55,11 +85,11 @@ public class Sample {
         this.taskDescription = taskDescription;
     }
 
-    public Enum getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(Enum status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
