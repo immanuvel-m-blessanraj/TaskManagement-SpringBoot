@@ -12,12 +12,12 @@ public interface TaskService {
 
     public List<Task> getAllTasks();
 
-    public void createSample(String task);
+    public Task getTask(String id);
 
-    public void addSample(Task task);
+    public void addTask(Task task);
 
-    public void updateSample(String id, Task task);
+    public void updateTask(String id, Task task);
 
-    public void deleteSample(String id);
+    public void deleteTask(String id);
 
 }

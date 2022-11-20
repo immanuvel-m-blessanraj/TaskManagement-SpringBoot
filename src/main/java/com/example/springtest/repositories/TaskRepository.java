@@ -12,11 +12,11 @@ import java.util.Optional;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    Optional<Task> findByTaskName(String taskName);
-
-    Task findById(String id);
-
-    List<Task> findByCreatedAt(Date createdAt);
+//    Optional<Task> findByTaskName(String taskName);
+//
+//    Task findById(String id);
+//
+//    List<Task> findByCreatedAt(Date createdAt);
 
     //Optional<Sample> findOne(String taskName);
 }
