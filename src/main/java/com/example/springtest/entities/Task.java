@@ -11,6 +11,9 @@ import java.util.Date;
 public class Task {
 
     @Id
+    @SequenceGenerator(name = "task_sequence",
+                        sequenceName = "task_sequence",
+                        allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
@@ -31,6 +34,18 @@ public class Task {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date completedAt;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     @PrePersist
     public  void setCreatedAt() {

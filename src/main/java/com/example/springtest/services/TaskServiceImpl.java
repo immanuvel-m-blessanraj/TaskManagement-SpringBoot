@@ -1,7 +1,6 @@
 package com.example.springtest.services;
 
 import com.example.springtest.entities.Task;
-import com.example.springtest.exceptions.TaskNotFoundException;
 import com.example.springtest.repositories.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,8 +73,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void addTask(Task task) {
+    public Task addTask(Task task) {
         taskRepository.save(task);
+        return task;
     }
 
     @Override

@@ -14,7 +14,7 @@ public interface TaskService {
 
     public Task getTask(String id);
 
-    public void addTask(Task task);
+    public Task addTask(Task task);
 
     public void updateTask(String id, Task task);
 
