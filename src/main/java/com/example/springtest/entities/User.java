@@ -24,7 +24,7 @@ public class User {
     private Long id;
     private String name;
     private String email;
-    private String Password;
+    private String password;
 
     @OneToMany(mappedBy = "user")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)

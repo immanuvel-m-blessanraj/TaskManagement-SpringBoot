@@ -1,6 +1,7 @@
 package com.example.springtest.services;
 
 import com.example.springtest.entities.Task;
+import com.example.springtest.pojos.TaskDto;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,13 +11,15 @@ import java.util.List;
 public interface TaskService {
     List<Task> tasks = new ArrayList<>();
 
-    public List<Task> getAllTasks();
+   // List<Task> getAllUserTasks(String userId);
 
-    public Task getTask(String id);
+    List<Task> getAllUserTasks(Long userId);
 
-    public Task addTask(Task task);
+    public Task getTask(Long id);
 
-    public void updateTask(String id, Task task);
+    public Task addTask(TaskDto taskDto);
+
+    public void updateTask(Long id, Task task);
 
     public void deleteTask(String id);
 

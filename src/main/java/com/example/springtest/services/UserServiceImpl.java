@@ -1,6 +1,7 @@
 package com.example.springtest.services;
 
 import com.example.springtest.entities.User;
+import com.example.springtest.exceptions.UserNotFoundException;
 import com.example.springtest.pojos.UserDto;
 import com.example.springtest.repositories.TaskRepository;
 import com.example.springtest.repositories.UserRepository;
@@ -33,6 +34,7 @@ public class UserServiceImpl implements UserService{
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
+
         return userRepository.save(user);
 
 
@@ -41,12 +43,12 @@ public class UserServiceImpl implements UserService{
     @Override
     public User userLogin(String email, String password) {
 
-        User user = new User();
-        if ((Objects.equals(user.getEmail(), email)) && (Objects.equals(user.getPassword(), password))) {
+        User user = userRepository.findByEmailAndPassword(email, password);
+        if(user == null) {
+            throw new UserNotFoundException("User does not exist!");
+        } else {
             return user;
         }
 
-
-        return null;
     }
 }

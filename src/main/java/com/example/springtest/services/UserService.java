@@ -4,7 +4,7 @@ import com.example.springtest.entities.User;
 import com.example.springtest.pojos.UserDto;
 import org.springframework.stereotype.Service;
 
-@Service
+
 public interface UserService {
     User userSignUp(UserDto userDto);
     User userLogin(String email, String password);

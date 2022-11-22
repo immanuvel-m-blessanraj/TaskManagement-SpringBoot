@@ -1,39 +1,41 @@
 package com.example.springtest.controllers;
 
 import com.example.springtest.entities.Task;
-import com.example.springtest.repositories.TaskRepository;
+import com.example.springtest.pojos.TaskDto;
 import com.example.springtest.services.TaskService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 //@Component
 //@RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/user")
 public class TaskController {
 
 
     private final TaskService taskService;
+   // private final UserService userService;
+
+
 
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
+        //this.userService = userService;
     }
    // private final TaskRepository taskRepository;
-
-
-    @GetMapping ("/")
-    public ResponseEntity<List<Task>> getAllTasks() {
-        List<Task> taskList = taskService.getAllTasks();
-        return new ResponseEntity<>(taskList, HttpStatus.OK);
-
-    }
+TaskDto taskDto;
+//    @PostMapping("/signup")
+//public ResponseEntity<String> userSignUp(@RequestBody UserDto userDto) {
+//        userService.userSignUp(userDto);
+//        return new ResponseEntity<>("Sign up successful!", HttpStatus.CREATED);
+//}
+//    @GetMapping ("/profile/{userId}")
+//    public ResponseEntity<List<TaskDto>> getAllUserTasks(@PathVariable Long userId) {
+//        List<TaskDto> taskDtoList = taskService.getAllUserTasks(userId);
+//        return new ResponseEntity<>(taskDtoList, HttpStatus.OK);
+//
+//    }
 
 //    @RequestMapping("/tasks/{taskName}")
 //    Optional<Task> findByTaskName(@PathVariable String taskName){
@@ -46,19 +48,21 @@ public class TaskController {
 
 
     @GetMapping("/task/{taskId}")
-    public ResponseEntity<Task> getTask(@PathVariable String taskId) {
-       Task task = taskService.getTask(taskId);
-       return new ResponseEntity<>(task, HttpStatus.OK);
+    public ResponseEntity<Task> getTask(@PathVariable Long taskId) {
+      Task task = taskService.getTask(taskId);
+       // TaskDto task = null;
+        return new ResponseEntity<>(task, HttpStatus.OK);
 
     }
     @PostMapping("/addtask")
-    public ResponseEntity<String> addTask(@RequestBody Task task){
-        taskService.addTask(task);
-    return new ResponseEntity<>("Task added successfully!", HttpStatus.CREATED);
+    public ResponseEntity<TaskDto> addTask(@RequestBody TaskDto taskDto){
+        taskService.addTask(taskDto);
+        //String outcome = "Task is added successfully!";
+    return new ResponseEntity<>(taskDto, HttpStatus.CREATED);
     }
 
     @PutMapping("/task/{taskId}/updatetask")
-    public ResponseEntity<String> updateTask(@PathVariable String taskId, @RequestBody Task task) {
+    public ResponseEntity<String> updateTask(@PathVariable Long taskId, @RequestBody Task task) {
         taskService.updateTask(taskId, task);
         return new ResponseEntity<>("Task updated successfully!", HttpStatus.OK);
     }

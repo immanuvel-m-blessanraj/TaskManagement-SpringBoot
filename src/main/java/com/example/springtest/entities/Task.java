@@ -7,15 +7,12 @@ import java.util.Date;
 
 
 @Entity
-@Table(name = "tasks")
+@Table(name = "task_table")
 public class Task {
 
     @Id
-    @SequenceGenerator(name = "task_sequence",
-                        sequenceName = "task_sequence",
-                        allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(length = 50, nullable = false)
     private String taskName;
@@ -23,10 +20,12 @@ public class Task {
     @Column(length = 80, nullable = false)
     private String taskDescription;
 
-    @Column
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false)
     private Date createdAt;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -52,12 +51,12 @@ public class Task {
         createdAt = new Date();
     }
 
-    @PostPersist
+
     public  void setUpdatedAt() {
         updatedAt = new Date();
     }
 
-    @PreUpdate
+
     public  void setCompletedAt() {
         completedAt = new Date();
     }
@@ -66,7 +65,7 @@ public class Task {
 
     }
 
-    public Task(String id, String taskName, String taskDescription, Status status, Date createdAt, Date updatedAt, Date completedAt) {
+    public Task(Long id, String taskName, String taskDescription, Status status, Date createdAt, Date updatedAt, Date completedAt) {
         this.id = id;
         this.taskName = taskName;
         this.taskDescription = taskDescription;
@@ -76,11 +75,11 @@ public class Task {
         this.completedAt = completedAt;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

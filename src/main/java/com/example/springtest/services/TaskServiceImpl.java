@@ -1,31 +1,37 @@
 package com.example.springtest.services;
 
 import com.example.springtest.entities.Task;
+import com.example.springtest.enums.Status;
+import com.example.springtest.pojos.TaskDto;
 import com.example.springtest.repositories.TaskRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.springtest.repositories.UserRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
 
-    @Autowired
-    private TaskRepository taskRepository;
+
+    private final TaskRepository taskRepository;
+    private final UserRepository userRepository;
+
+    Task task = new Task();
+
+    public TaskServiceImpl(TaskRepository taskRepository, UserRepository userRepository) {
+        this.taskRepository = taskRepository;
+        this.userRepository = userRepository;
+    }
+
+
     //private TaskService taskService;
 
 
 
-    @Override
-    public List<Task> getAllTasks() {
-        List<Task> taskList = new ArrayList<>();
-        taskRepository.findAll()
-                .forEach(taskList::add);
-        return taskList;
-    }
+
 
 //    @Override
 //    public void getTask(String task) {
@@ -61,25 +67,31 @@ public class TaskServiceImpl implements TaskService {
 //    }
 
 
-
-
     @Override
-    public Task getTask(String id) {
-      return   tasks.stream()
-                .filter(t -> t.getId().equals(id))
-                .findFirst()
-                .get();
-
+    public List<Task> getAllUserTasks(Long userId) {
+        List<Task> tasks = taskRepository.findTaskByUserId(userId);
+        return tasks;
     }
 
     @Override
-    public Task addTask(Task task) {
+    public Task getTask(Long id) {
+        Task task = taskRepository.findTaskById(id);
+        return task;
+    }
+
+    @Override
+    public Task addTask(TaskDto taskDto) {
+        Task task = new Task();
+       // BeanUtils.copyProperties(taskDto, task);
+        task.setTaskName(taskDto.getTaskName());
+        task.setTaskDescription(taskDto.getTaskDescription());
+        task.setStatus(Status.PENDING);
         taskRepository.save(task);
         return task;
     }
 
     @Override
-    public void updateTask(String id, Task task) {
+    public void updateTask(Long id, Task task) {
         for (int i = 0; i < tasks.size(); i++) {
             Task s = tasks.get(i);
             if (s.getId().equals(id)) {
@@ -90,10 +102,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deleteTask(String id) {
-        tasks.removeIf(
-                t -> t.getId().equals(id)
-        );
+    public void deleteTask(String taskId) {
+        taskRepository.deleteById(taskId);
+//        tasks.removeIf(
+//                t -> t.getId().equals(id)
+//        );
     }
 
 
