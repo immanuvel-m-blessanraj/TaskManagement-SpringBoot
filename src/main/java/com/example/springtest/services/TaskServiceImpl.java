@@ -103,11 +103,47 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deleteTask(String taskId) {
+    public void deleteTask(Long taskId) {
         taskRepository.deleteById(taskId);
 //        tasks.removeIf(
 //                t -> t.getId().equals(id)
 //        );
+    }
+
+    @Override
+    public Task pendingToInProgress(Long id, TaskDto taskDto) {
+        if (taskRepository.findById(id).isPresent()) {
+            Task pendingTask = taskRepository.findById(id).get();
+            pendingTask.setStatus(taskDto.getStatus());
+            taskRepository.save(pendingTask);
+            return pendingTask;
+        }
+        return null;
+    }
+
+    @Override
+    public Task InProgressBackToPending(Long id, TaskDto taskDto) {
+        if (taskRepository.findById(id).isPresent()) {
+            Task backToPending = taskRepository.findById(id).get();
+            backToPending.setStatus(taskDto.getStatus());
+            taskRepository.save(backToPending);
+            return backToPending;
+        }
+
+        return null;
+    }
+
+    @Override
+    public Task InProgressToDone(Long id, TaskDto taskDto) {
+        if(taskRepository.findById(id).isPresent()) {
+            Task progressToComplete = taskRepository.findById(id).get();
+            progressToComplete.setStatus(taskDto.getStatus());
+            taskRepository.save(progressToComplete);
+            return progressToComplete;
+
+        }
+
+        return null;
     }
 
 

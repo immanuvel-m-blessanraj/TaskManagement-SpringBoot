@@ -3,11 +3,9 @@ package com.example.springtest.services;
 import com.example.springtest.entities.User;
 import com.example.springtest.exceptions.UserNotFoundException;
 import com.example.springtest.pojos.UserDto;
-import com.example.springtest.repositories.TaskRepository;
 import com.example.springtest.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -15,8 +13,11 @@ public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
 
 
+
+
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
+
 
     }
 
@@ -41,5 +42,7 @@ public class UserServiceImpl implements UserService{
         } else {
             return user;
         }
+
+
     }
 }

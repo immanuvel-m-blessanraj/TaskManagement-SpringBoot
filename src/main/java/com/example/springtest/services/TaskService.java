@@ -21,6 +21,12 @@ public interface TaskService {
 
     public Task updateTask(Long id, TaskDto taskDto);
 
-    public void deleteTask(String id);
+    public void deleteTask(Long id);
+
+    public Task pendingToInProgress(Long id, TaskDto taskDto);
+
+    public Task InProgressBackToPending(Long id, TaskDto taskDto);
+
+    public Task InProgressToDone(Long id, TaskDto taskDto);
 
 }

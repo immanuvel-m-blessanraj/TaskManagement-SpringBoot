@@ -68,9 +68,27 @@ public class TaskController {
     }
 
     @DeleteMapping("/delete/{taskId}")
-    public ResponseEntity<String> deleteTask(@PathVariable String taskId) {
+    public ResponseEntity<String> deleteTask(@PathVariable Long taskId) {
         taskService.deleteTask(taskId);
         return new ResponseEntity<>("Task deleted successfully!", HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/status/prog/{taskId}")
+    public ResponseEntity<String> pendingToProgress(@PathVariable Long taskId, @RequestBody TaskDto taskDto) {
+        taskService.pendingToInProgress(taskId, taskDto);
+        return new ResponseEntity<>("Task status changed successfully!", HttpStatus.OK);
+    }
+
+    // public Task InProgressBackToPending(Long id, TaskDto taskDto)
+    @PutMapping("/status/pend/{taskId}")
+    public ResponseEntity<String> InProgressToPending(@PathVariable Long taskId, @RequestBody TaskDto taskDto) {
+        taskService.InProgressBackToPending(taskId, taskDto);
+        return new ResponseEntity<>("Task status changed successfully", HttpStatus.OK);
+    }
+    @PutMapping("/status/done/{taskId}")
+    public ResponseEntity<String> InProgressToDone(@PathVariable Long taskId, @RequestBody TaskDto taskDto) {
+        taskService.InProgressToDone(taskId, taskDto);
+        return new ResponseEntity<>("Task status changed successfully", HttpStatus.OK);
     }
 
 }
