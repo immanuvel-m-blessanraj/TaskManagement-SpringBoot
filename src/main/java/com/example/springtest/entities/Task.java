@@ -4,6 +4,7 @@ import com.example.springtest.enums.Status;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.UUID;
 
 
 @Entity
@@ -47,18 +48,27 @@ public class Task {
     }
 
     @PrePersist
-    public  void setCreatedAt() {
-        createdAt = new Date();
+    protected  void setCreatedAt() {
+        if (this.createdAt == null) createdAt = new Date();
+        if (this.updatedAt == null) updatedAt = new Date();
+        if (this.id == null);
+        try {
+            id = Long.parseLong(UUID.randomUUID().toString());
+        } catch (NumberFormatException nfe ) {
+            nfe.printStackTrace();
+        }
     }
 
 
-    public  void setUpdatedAt() {
-        updatedAt = new Date();
+    @PreUpdate
+    protected  void setUpdatedAt() {
+        this.updatedAt = new Date();
     }
 
 
-    public  void setCompletedAt() {
-        completedAt = new Date();
+    @PreRemove
+    protected  void setCompletedAt() {
+        this.completedAt = new Date();
     }
 
     public Task() {

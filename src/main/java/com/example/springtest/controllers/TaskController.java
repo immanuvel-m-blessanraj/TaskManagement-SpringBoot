@@ -24,7 +24,7 @@ public class TaskController {
         //this.userService = userService;
     }
    // private final TaskRepository taskRepository;
-TaskDto taskDto;
+    TaskDto taskDto;
 //    @PostMapping("/signup")
 //public ResponseEntity<String> userSignUp(@RequestBody UserDto userDto) {
 //        userService.userSignUp(userDto);
@@ -61,9 +61,9 @@ TaskDto taskDto;
     return new ResponseEntity<>(taskDto, HttpStatus.CREATED);
     }
 
-    @PutMapping("/task/{taskId}/updatetask")
-    public ResponseEntity<String> updateTask(@PathVariable Long taskId, @RequestBody Task task) {
-        taskService.updateTask(taskId, task);
+    @PutMapping("/update/{taskId}")
+    public ResponseEntity<String> updateTask(@PathVariable Long taskId, @RequestBody TaskDto taskDto) {
+        taskService.updateTask(taskId, taskDto);
         return new ResponseEntity<>("Task updated successfully!", HttpStatus.OK);
     }
 

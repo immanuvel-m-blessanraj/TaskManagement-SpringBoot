@@ -91,14 +91,15 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void updateTask(Long id, Task task) {
-        for (int i = 0; i < tasks.size(); i++) {
-            Task s = tasks.get(i);
-            if (s.getId().equals(id)) {
-                tasks.set(i, task);
-                return;
-            }
+    public Task updateTask(Long id, TaskDto taskDto) {
+        if (taskRepository.findById(id).isPresent()) {
+            Task existingTask = taskRepository.findById(id).get();
+            existingTask.setTaskName(taskDto.getTaskName());
+            existingTask.setTaskDescription(taskDto.getTaskDescription());
+            taskRepository.save(existingTask);
+            return existingTask;
         }
+        return null;
     }
 
     @Override

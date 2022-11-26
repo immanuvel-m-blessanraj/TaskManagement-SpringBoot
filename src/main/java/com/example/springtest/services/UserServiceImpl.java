@@ -23,14 +23,6 @@ public class UserServiceImpl implements UserService{
     @Override
     public User userSignUp(UserDto userDto) {
         User user = new User();
-//        if (user.getName() == null)
-//            throw new NameCannotBeEmptyException("Name cannot be empty!");
-//        else if (user.getEmail() == null)
-//            throw new EmailCannotBeEmptyException ("Email cannot be empty!");
-//        else if (user.getPassword() == null)
-//            throw new PasswordCannotBeEmptyException ("Password cannot be empty!")
-
-            //boolean userExist = userRepository.existsById(user.)
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
@@ -49,6 +41,5 @@ public class UserServiceImpl implements UserService{
         } else {
             return user;
         }
-
     }
 }

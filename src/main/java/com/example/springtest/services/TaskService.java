@@ -19,7 +19,7 @@ public interface TaskService {
 
     public Task addTask(TaskDto taskDto);
 
-    public void updateTask(Long id, Task task);
+    public Task updateTask(Long id, TaskDto taskDto);
 
     public void deleteTask(String id);
 
