@@ -27,13 +27,9 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String UserLogin(@ModelAttribute("user") User user) {
-        User oauthUser = userService.userLogin(user.getEmail(), user.getPassword());
-        if(Objects.nonNull(oauthUser)) {
-            return "redirect:/landing";
-        } else {
-            return "redirect:/signup";
-        }
+    public ResponseEntity<String> UserLogin(@RequestBody UserDto userDto) {
+        UserDto oauthUser = userService.userLogin(userDto.getEmail(), userDto.getPassword());
+        return new ResponseEntity<>("Login Successful!", HttpStatus.OK);
     }
 
 

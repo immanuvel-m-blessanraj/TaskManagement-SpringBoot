@@ -4,6 +4,7 @@ import com.example.springtest.entities.User;
 import com.example.springtest.exceptions.UserNotFoundException;
 import com.example.springtest.pojos.UserDto;
 import com.example.springtest.repositories.UserRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,15 +35,15 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User userLogin(String email, String password) {
+    public UserDto userLogin(String email, String password) {
 
         User user = userRepository.findByEmailAndPassword(email, password);
-        if(user == null) {
-            throw new UserNotFoundException("User does not exist!");
-        } else {
-            return user;
+        if(user != null) {
+            UserDto userDto = new UserDto();
+            BeanUtils.copyProperties(user, userDto);
+            return userDto;
         }
-
+            throw new RuntimeException("User does not exist");
 
     }
 }
