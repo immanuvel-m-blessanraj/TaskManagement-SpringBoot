@@ -10,6 +10,8 @@ The application helps a user to manage their time by allowing the user to log th
 <li>Login, if a returning user</li>
 <li>Create a task</li>
 <li>View all tasks</li>
+<li>Update a task</li>
+<li>Delete a task</li>
 <li>Assign a status to each task, i.e pending, in-progress or done</li>
 </ul>
 
